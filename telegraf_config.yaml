@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-sca-config
+  namespace: default
+data:
+  sca.sh: |
+    #!/bin/sh
+    echo "weather temperature=82"
+    
+  telegraf.yml: |
+    [agent]
+      interval = "10s"  
+    
+    [[inputs.prometheus]]
+      ## An array of urls to scrape metrics from.
+      urls = ["http://prometheus-sca:9090/metrics"]
+    
+    [[inputs.redis]]
+      servers = ["tcp://redis-stack-sca-1:6379"]
+      interval="15s"
+
+    [[inputs.exec]]
+      commands = ["/etc/telegraf/sca.sh"]
+      data_format = "influx"
+      interval="15s"
+    
+    [[outputs.prometheus_client]]
+      ## Address to listen on.
+      listen = ":9126"
+    
+

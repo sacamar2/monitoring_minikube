@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf-sca
+spec:
+  selector:
+    matchLabels:
+      app: telegraf
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: telegraf
+      annotations:
+        telegraf.io/scrape: "true"
+        telegraf.io/port: "9126"        
+    spec:
+      hostname: telegraf-sca
+      containers:
+      - name: telegraf
+        image: telegraf:latest
+        args:
+          - '--config=/etc/telegraf/telegraf.yml'
+        ports:
+        - containerPort: 9126
+          name: web
+        volumeMounts:
+        - name: telegraf-config-volume
+          mountPath: /etc/telegraf
+      restartPolicy: Always
+      volumes:
+      - name: telegraf-config-volume
+        configMap:
+            defaultMode: 0777
+            name: telegraf-sca-config

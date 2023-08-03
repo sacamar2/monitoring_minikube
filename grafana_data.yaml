@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-sca-data
+  namespace: default
+data:
+  monthly_income.csv: |
+    Income,Source,Month
+    1297000,Ads,June
+    720700,Merchandising,June
+    80550,DebtRevenue,June
+    823000,Ads,July
+    1010500,Merchandising,July
+    45550,DebtRevenue,July
+    283500,Ads,August
+    517500,Merchandising,August
+    109200,DebtRevenue,August
+  
+  regions.csv: |
+    Region,Size,X
+    Madrid,604,1.1
+    Barcelona,102,1.2
+    Valencia,135,1.3
+    Londres,1572,1.4
+    Copenhague,180,1.5

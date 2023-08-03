@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-sca-config
+  namespace: default
+data:
+  datasources.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: prometheus-sca
+        type: prometheus
+        access: proxy
+        uid: prometheussca
+        version: 1
+        editable: True
+        url: http://prometheus-sca:9090
+        jsonData:
+          httpMethod: "POST"
+        manageAlerts: true
+        prometheusType: Prometheus
+        prometheusVersion: 2.44.0
+        cacheLevel: 'High'
+        incrementalQuerying: true
+        incrementalQueryOverlapWindow: 10m
+
